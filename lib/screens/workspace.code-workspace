@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "startapp",
+			"path": "../.."
+		},
+		{
+			"name": "images",
+			"path": "../../../../Downloads/images"
+		}
+	],
+	"settings": {}
+}
