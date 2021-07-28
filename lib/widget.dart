@@ -43,7 +43,7 @@ class TodoWidget extends StatelessWidget{
   late final String? text;
   late bool isDone;
 
-  TodoWidget({this.text, required this.isDone});
+  TodoWidget({this.text,required this.isDone});
 
   @override
   Widget build(BuildContext context) {
