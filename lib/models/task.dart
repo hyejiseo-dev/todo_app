@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Task{
-  final int id;
-  final String title;
-  final String description;
-  Task({required this.id, required this.title, required this.description});
+  final int? id;
+  final String? title;
+  final String? description;
+  Task({this.id, this.title, this.description});
 
   Map<String, dynamic> toMap(){
     return {

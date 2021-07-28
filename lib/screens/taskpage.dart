@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:startapp/database_helper.dart';
+import 'package:startapp/models/task.dart';
 import 'package:startapp/widget.dart';
 
 class TaskPage extends StatefulWidget {
@@ -40,8 +42,17 @@ class _TaskpageState extends State<TaskPage> {
                       ),
                       Expanded(
                         child: TextField(
-                          onSubmitted: (value){
-                            print('value : $value');
+                          onSubmitted: (value) async{
+                            // 타이틀 값이 없을 때는 데이터베이스에 넣지 않음
+                            if(value != ''){
+                              DatabaseHelper _dbHelper = DatabaseHelper();
+                              Task _newTask = Task(
+                                title: value
+                              );
+                              await _dbHelper.insertTask(_newTask);
+
+                              print('new task has been created');
+                            }
                           },
                           decoration: InputDecoration(
                             hintText: "Enter Task Title..",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:startapp/database_helper.dart';
 import 'package:startapp/screens/taskpage.dart';
 import 'package:startapp/widget.dart';
 
@@ -10,6 +11,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  DatabaseHelper _dbHelper = DatabaseHelper();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,17 +32,20 @@ class _HomePageState extends State<HomePage> {
                   Expanded(
                     child: ScrollConfiguration(
                       behavior: NoGlowBehaviour(),
-                      child: ListView(
-                        children: [
-                          TaskCardWidget(
-                            title: "Get Started",
-                            des: 'Hello! this is a default memo for you',
-                          ),
-                          TaskCardWidget(),
-                          TaskCardWidget(),
-                          TaskCardWidget(),
-                        ],
-                      ),
+                      child: FutureBuilder(
+                        initialData: [],
+                        future: _dbHelper.getTasks(),
+                        builder: (context, AsyncSnapshot snapshot) {
+                          return ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (context, index) {
+                              return TaskCardWidget(
+                                title: snapshot.data[index].title,
+                              );
+                            },
+                          );
+                        },
+                      )
                     ),
                   )
                 ],
@@ -52,7 +57,10 @@ class _HomePageState extends State<HomePage> {
                 child: GestureDetector(
                   onTap: () {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => TaskPage()));
+                        MaterialPageRoute(builder: (context) => TaskPage()),
+                    ).then((value){
+                      setState(() {});
+                    });
                   },
                   child: Container(
                     width: 60.0,
